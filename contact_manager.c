@@ -5,7 +5,7 @@ int main() {
     Node* head = NULL;
     int choice;
 
-    do {
+
         printf("\nContact Manager\n");
         printf("1. Ajouter Contact\n");
         printf("2. Afficher Contacts\n");
@@ -20,10 +20,10 @@ int main() {
             case 2: displayContacts(head); break;
             case 3: searchContact(head); break;
             case 4: deleteContact(&head); break;
-            case 5: freeList(head); printf("Déconnexion...\n"); break;
+            case 5: freeList(head); printf("Deconnexion...\n"); break;
             default: printf("Invalid choice. Try again.\n");
         }
-    } while (choice != 5);
+
 
     return 0;
 }

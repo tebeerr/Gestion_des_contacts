@@ -5,43 +5,42 @@
 
 void addContact(Node** head) {
     Node* newNode = (Node*)malloc(sizeof(Node));
-    printf("Entrer le Nom: ");
+    printf("Entrer le nom: ");
     scanf(" %[^\n]", newNode->data.Nom);
-    printf("Entrer le Téléphone: ");
+    printf("Entrer le numero de telephone: ");
     scanf("%s", newNode->data.Tel);
-    printf("Entrer l'Email: ");
-    scanf("%s", newNode->data.Email);
+    printf("Entrer l'email: ");
+    scanf("%s", newNode->data.email);
 
     newNode->next = *head;
     *head = newNode;
 
-    printf("Contact ajouté avec succès!\n");
+    printf("Contact ajoute avec succes!\n");
 }
 
 void displayContacts(Node* head) {
     if (head == NULL) {
-        printf("Aucun contact à afficher
-.\n");
+        printf("Aucun contact a afficher.\n");
         return;
     }
     Node* temp = head;
     while (temp != NULL) {
         printf("Nom: %s\nTel: %s\nEmail: %s\n\n",
-               temp->data.name, temp->data.phone, temp->data.email);
+               temp->data.Nom, temp->data.Tel, temp->data.email);
         temp = temp->next;
     }
 }
 
 void searchContact(Node* head) {
     char name[50];
-    printf("Entrer le Nom a recherché: ");
+    printf("Entrer le Nom a recherche: ");
     scanf(" %[^\n]", name);
 
     Node* temp = head;
     while (temp != NULL) {
-        if (strcmp(temp->data.name, name) == 0) {
+        if (strcmp(temp->data.Nom, name) == 0) {
             printf("Nom: %s\nTel: %s\nEmail: %s\n",
-                   temp->data.name, temp->data.phone, temp->data.email);
+                   temp->data.Nom, temp->data.Tel, temp->data.email);
             return;
         }
         temp = temp->next;
@@ -55,7 +54,7 @@ void deleteContact(Node** head) {
     scanf(" %[^\n]", name);
 
     Node *temp = *head, *prev = NULL;
-    while (temp != NULL && strcmp(temp->data.name, name) != 0) {
+    while (temp != NULL && strcmp(temp->data.Nom, name) != 0) {
         prev = temp;
         temp = temp->next;
     }
