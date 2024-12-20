@@ -5,6 +5,10 @@
 
 void addContact(Node** head) {
     Node* newNode = (Node*)malloc(sizeof(Node));
+    if (!newNode) {
+          perror("Memory allocation failed");
+          exit(EXIT_FAILURE);
+        }
     printf("Entrer le nom: ");
     scanf(" %[^\n]", newNode->data.Nom);
     printf("Entrer le numero de telephone: ");
@@ -70,7 +74,7 @@ void deleteContact(Node** head) {
         prev->next = temp->next;
 
     free(temp);
-    printf("Contact supprimé avec succès.\n");
+    printf("Contact supprime avec succes.\n");
 }
 
 void freeList(Node* head) {
@@ -80,4 +84,55 @@ void freeList(Node* head) {
         head = head->next;
         free(temp);
     }
+}
+
+
+void saveContactsToFile(Node* head, const char* filename) {
+    FILE* file = fopen(filename, "w");
+
+    if (!file) {
+        perror("Error opening file for saving");
+        return;
+    }
+
+    Node* temp = head;
+    while (temp != NULL) {
+        fprintf(file, "%s\n%s\n%s\n", temp->data.Nom, temp->data.Tel, temp->data.email);
+        temp = temp->next;
+    }
+
+    fclose(file);
+}
+
+
+
+void loadContactsFromFile(Node** head, const char* filename) {
+    FILE* file = fopen(filename, "r");
+
+    if (!file) {
+       return;
+    }
+
+    char Nom[50];
+    char Tel[15];
+    char email[50];
+
+    while (fscanf(file, " %[^\n]\n%[^\n]\n%[^\n]\n", Nom, Tel, email) == 3) {
+        Node* newNode = (Node*)malloc(sizeof(Node));
+         if (!newNode) {
+            perror("Memory allocation failed");
+            fclose(file);
+            freeList(*head);
+            exit(EXIT_FAILURE);
+        }
+        strcpy(newNode->data.Nom, Nom);
+        strcpy(newNode->data.Tel, Tel);
+        strcpy(newNode->data.email, email);
+
+
+        newNode->next = *head;
+        *head = newNode;
+    }
+
+  fclose(file);
 }
